@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
+import h5py
 
 # NEURAL NET DESIGN
 
@@ -52,18 +53,18 @@ def split_data(data, train_size = None, training = True):
 
 #get the first half of the mnist data (second half is for testing) and shuffle it.
 print('Getting Data...')
-mnist_data = np.genfromtxt('https://dl.google.com/mlcc/mledu-datasets/mnist_test.csv', delimiter=',')
-mnist_data = mnist_data[:10001]
+mnist_data = np.genfromtxt('https://dl.google.com/mlcc/mledu-datasets/mnist_train_small.csv', delimiter=',')
+#mnist_data = mnist_data[:10001]
 np.random.shuffle(mnist_data)
 
-train_data, val_data = split_data(data = mnist_data, train_size = 9000)
+train_data, val_data = split_data(data = mnist_data, train_size = 18000)
 print('Getting Data Complete.')
 
 
 # RUNNING THE NEURAL NETWORK
 
 print('Training Neural Net...')
-myNet = NeuralNet(learning_rate = 0.076, drop_rate = 0.926, train_data = train_data, val_data = val_data)
+myNet = NeuralNet(learning_rate = 0.076, drop_rate = 0.927, train_data = train_data, val_data = val_data)
 myNet.train(epochs = 100, batch_size = 50)
 print('Training Neural Net Complete.')
 
@@ -71,7 +72,7 @@ print('Training Neural Net Complete.')
 
 print('Getting Test Data...')
 test_data = np.genfromtxt('https://dl.google.com/mlcc/mledu-datasets/mnist_test.csv', delimiter=',')
-test_data = test_data[10001:]
+#test_data = test_data[10001:]
 np.random.shuffle(test_data)
 test_features, test_labels = split_data(data = test_data, training = False)
 print('Getting Test Data Complete.')
@@ -82,7 +83,7 @@ print('Test Accuracy: ' + str(score[1]))
 
 # SAVING THE NETWORK
 
-if score[1] < 0.95:
+if score[1] >= 0.95:
 	myNet.model.save('mnist_over_95.h5')
 	print('Network Saved!')
 else:
