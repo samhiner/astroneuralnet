@@ -16,7 +16,7 @@ def time_to_deg(time, ra = True):
 	if ra:
 		degrees = (time[0] + (time[1] / 60) + (time[2] / 3600)) * 15
 	else:
-		degrees = time[0] + time[1] / 60 + time[2] / 3600
+		degrees = time[0] + (time[1] / 60) + (time[2] / 3600)
 
 	if neg:
 		degrees = -degrees
