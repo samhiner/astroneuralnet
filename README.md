@@ -11,5 +11,5 @@ Run this once you finish running datadownloading.py. This will convert all of th
 ### neuralnetworktrain.py (nonexistent so far)
 The actual neural network. Run this to train the model.
 
-### neuralnetworkeval.py (nonexistent so far)
-Once you have trained the neural network, use this for more in-depth testing. (Maybe give option to save on main network and if you do then you can go here and test on any image and stuff)
+### neuralnetworkeval.ipynb (nonexistent so far)
+Once you have trained the neural network, use this for more in-depth testing. (Maybe give option to save on main network and if you do then you can go here and test on any image and stuff) 
