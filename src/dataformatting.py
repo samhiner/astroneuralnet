@@ -9,8 +9,8 @@ filenames = list(zoo_data.loc[:,'OBJID'])
 arr_file = open('../data/pixelsarray.txt' , 'a')
 
 #convert all of the images to greyscale arrays of pixels and write those arrays to a file
-for objID in filenames:
-	im = Image.open('../data/images/' + str(objID) + '.jpg').convert('LA')
+for file in range(0,len(filenames)):
+	im = Image.open('../data/images/' + str(filenames[file]) + '.jpg').convert('LA')
 	objArr = np.array(im.getdata())
 	im.close()
 
@@ -19,6 +19,11 @@ for objID in filenames:
 	arr_file.write(str(list(objArr)) + ''',
 	''')
 
+	if file % 10000 == 0:
+		print('On file: ' + str(file))
+
 #add an ending bracket to the file so it can be evaluated as an array of arrays of pixels (aka an array of "images")
 arr_file.write(']')
 arr_file.close()
+
+print('Done')
