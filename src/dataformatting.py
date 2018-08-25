@@ -2,6 +2,10 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
+#makes it easy to change number of files the list made here should be split across
+NUM_FILES = 34
+objects_per_file = int(667944/34)
+
 #get a list of filenames split into 14 groups
 def get_filenames():
 	#get a list nested list where every element has objid, and one-hot category for type
@@ -9,9 +13,9 @@ def get_filenames():
 	raw_filenames = raw_filenames.values.tolist()
 	#split up list into 34 sublists (each sublist is a list of what images should be loaded into the memory at a specific time)
 	filenames = []
-	for x in range(0,33):
-		filenames.append(raw_filenames[20000 * x : 20000 * (x + 1)])
-	filenames.append(raw_filenames[(20000 * 33):])
+	for x in range(0,NUM_FILES - 1):
+		filenames.append(raw_filenames[objects_per_file * x : objects_per_file * (x + 1)])
+	filenames.append(raw_filenames[(objects_per_file * NUM_FILES - 1):])
 
 	return filenames
 
