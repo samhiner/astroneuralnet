@@ -4,10 +4,10 @@ from PIL import Image
 
 #get a list of filenames split into 14 groups
 def get_filenames():
-	#get a list of all of the OBJIDs in the database
-	raw_filenames = list(zoo_data.loc[:,'OBJID'])
-
-	#split up list of OBJIDs into 34 sublists (each sublist is a list of what images should be loaded into the memory at a specific time)
+	#get a list nested list where every element has objid, and one-hot category for type
+	raw_filenames = zoo_data.loc[:,['OBJID', 'SPIRAL','ELLIPTICAL', 'UNCERTAIN']]
+	raw_filenames = raw_filenames.values.tolist()
+	#split up list into 34 sublists (each sublist is a list of what images should be loaded into the memory at a specific time)
 	filenames = []
 	for x in range(0,33):
 		filenames.append(raw_filenames[20000 * x : 20000 * (x + 1)])
@@ -32,11 +32,9 @@ filenames = get_filenames()
 for x in range(0,len(filenames)):
 	filelist = []
 	for file in filenames[x]:
-		form_file = [file]
-		#TODO add labels (spiral, etc) to form_file. maybe in get_filenames function.
-		form_file.extend(get_img_px(file))
-		filelist.append(form_file)
-	np.save(('../data/imagelist%s' % x), filelist)			
+		file.extend(get_img_px(file[0]))
+
+	np.save(('../data/imagelist%s' % x), filenames[x])			
 	print('Finished Group %i' % x)
 
 print('Done')
