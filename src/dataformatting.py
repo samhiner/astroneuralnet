@@ -4,7 +4,7 @@ from PIL import Image
 
 #makes it easy to change number of files the list made here should be split across
 NUM_FILES = 34
-objects_per_file = int(667944/34)
+objects_per_file = int(667944/NUM_FILES)
 
 #get a list of filenames split into 14 groups
 def get_filenames():
@@ -34,11 +34,11 @@ filenames = get_filenames()
 #go through each of the 14 filename lists and get images for all of the files in each one and save them in a file one at a time
 #so the [0] will be loaded into mem and saved to a file, then [1] and so on so there's not too much in the RAM at once
 for x in range(0,len(filenames)):
-	filelist = []
 	for file in filenames[x]:
 		file.extend(get_img_px(file[0]))
 
-	np.save(('../data/imagelist%s' % x), filenames[x])			
+	np.save(('../data/imagelist%s' % x), filenames[x])
 	print('Finished Group %i' % x)
+	filenames[x] = 0
 
 print('Done')
