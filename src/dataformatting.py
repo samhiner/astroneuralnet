@@ -2,19 +2,16 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-import matplotlib.pyplot as plt
-import scipy.ndimage
-
 #makes it easy to change number of files the list made here should be split across
 NUM_FILES = 34
 objects_per_file = int(667944/NUM_FILES)
 
-#get a list of filenames split into NUM_FILES groups
+#get a list of filenames split into 14 groups
 def get_filenames():
 	#get a list nested list where every element has objid, and one-hot category for type
 	raw_filenames = zoo_data.loc[:,['OBJID', 'SPIRAL','ELLIPTICAL', 'UNCERTAIN']]
 	raw_filenames = raw_filenames.values.tolist()
-	#split up list into NUM_FILES sublists (each sublist is a list of what images should be loaded into the memory at a specific time)
+	#split up list into 34 sublists (each sublist is a list of what images should be loaded into the memory at a specific time)
 	filenames = []
 	for x in range(0,NUM_FILES - 1):
 		filenames.append(raw_filenames[objects_per_file * x : objects_per_file * (x + 1)])
@@ -28,23 +25,15 @@ def get_img_px(file):
 	objArr = np.array(im.getdata())
 	im.close()
 	objArr = objArr[:,0] / 255
-	objArr = objArr.reshape((128, 128))
-	print(objArr)
-	plt.imshow(objArr)
-	plt.show()
-	plt.imshow(scipy.ndimage.filters.gaussian_filter(objArr, 1))
-	plt.show()
-
 	return objArr
 
 zoo_data = pd.read_csv('../data/zoodata.csv', sep=',', header=0)
 zoo_data = zoo_data.reindex(np.random.permutation(zoo_data.index))
 filenames = get_filenames()
 
-#go through each of the NUM_FILES filename lists and get images for all of the files in each one and save them in a file one at a time
+#go through each of the 14 filename lists and get images for all of the files in each one and save them in a file one at a time
 #so the [0] will be loaded into mem and saved to a file, then [1] and so on so there's not too much in the RAM at once
-get_img_px(filenames[0][0][0])
-'''for x in range(0,len(filenames)):
+for x in range(0,len(filenames)):
 	for file in filenames[x]:
 		file.extend(get_img_px(file[0]))
 
@@ -52,4 +41,4 @@ get_img_px(filenames[0][0][0])
 	print('Finished Group %i' % x)
 	filenames[x] = 0
 
-print('Done')'''
+print('Done')
