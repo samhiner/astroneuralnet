@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from PIL import Image
+import scipy.ndimage
 
 #makes it easy to change number of files the list made here should be split across
 NUM_FILES = 34
@@ -25,6 +26,7 @@ def get_img_px(file):
 	objArr = np.array(im.getdata())
 	im.close()
 	objArr = objArr[:,0] / 255
+	objArr = scipy.ndimage.filters.gaussian_filter(objArr, 1)	
 	return objArr
 
 zoo_data = pd.read_csv('../data/zoodata.csv', sep=',', header=0)

@@ -38,7 +38,7 @@ class NeuralNet:
 		scores = self.model.evaluate(features, labels, verbose = 0)
 		return scores
 
-neural_net = NeuralNet(learning_rate=0.005, drop_rate=0.0)
+neural_net = NeuralNet(learning_rate=0.005, drop_rate=0.95)
 
 #RUNNING THE NEURAL NET
 
@@ -53,7 +53,7 @@ for file in range(0,NUM_TRAINING_FILES):
 	print('''
 	TRAINING SET %s/34 
 	''' % str(file + 1))
-	neural_net.train(np.load('../data/imagelist%s.npy' % file), 1, 50)
+	neural_net.train(np.load('../data/imagelist%s.npy' % file), 10, 50)
 	for validation_file in range(VALIDATION_SET[0], VALIDATION_SET[1]):
 		scores = neural_net.test(np.load('../data/imagelist%s.npy' % validation_file))
 		print('Validation Accuracy: %s' % scores[1])
