@@ -20,7 +20,7 @@ class NeuralNet:
 		self.model.add(keras.layers.Dense(3, activation='softmax'))
 
 		self.model.compile(optimizer=tf.train.AdagradOptimizer(learning_rate), loss='categorical_crossentropy', metrics=['accuracy'])
-	
+
 	#train the neural net on data
 		#data: numpy array where 1st column is objid, 2-5 are one-hot labels, and 6+ is pixels from the image.
 		#epochs: number of times you train over the dataset
@@ -42,7 +42,7 @@ class NeuralNet:
 	def save(self):
 		model_json = self.model.to_json()
 		with open('../data/nn/model.json', 'w') as file:
-		    file.write(model_json)
+			file.write(model_json)
 		self.model.save_weights('../data/nn/model.h5')
 		print('Model Saved!')
 
